@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fastlane-plugin-verify_ipa (0.1.0)
+    fastlane-plugin-verify_ipa (0.2.0)
       plist
 
 GEM
