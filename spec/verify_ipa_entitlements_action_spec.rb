@@ -39,5 +39,37 @@ describe Fastlane::Actions::VerifyIpaEntitlementsAction do
         entitlements
       )
     end
+
+    it 'raises user_error if other boolean params exist with mismatch' do
+      expect(Fastlane::UI).to receive(:user_error!).with("Mismatched get_task_allow. Expected: 'true'; Found: 'false'")
+
+      Fastlane::Actions::VerifyIpaEntitlementsAction.verify_entitlements(
+        { other_params: { get_task_allow: true } },
+        entitlements
+      )
+    end
+
+    it 'raises user_error if other array params exist with mismatch' do
+      expect(Fastlane::UI).to receive(:user_error!).with("Mismatched keychain_access_groups. Expected: '[\"MZ6ZTY3EA7.*\"]'; Found: '[\"MZ6ZTY3EA6.*\"]'")
+
+      Fastlane::Actions::VerifyIpaEntitlementsAction.verify_entitlements(
+        { other_params: { keychain_access_groups: ['MZ6ZTY3EA7.*'] } },
+        entitlements
+      )
+    end
+
+    it 'shows success if all params match' do
+      expect(Fastlane::UI).to receive(:success).with("Entitlements are verified.")
+
+      Fastlane::Actions::VerifyIpaEntitlementsAction.verify_entitlements(
+        { application_identifier: 'MZ6ZTY3EA6.com.apple.*',
+          team_identifier: 'MZ6ZTY3EA6',
+          other_params: {
+            keychain_access_groups: ['MZ6ZTY3EA6.*'],
+            get_task_allow: false
+           } },
+        entitlements
+      )
+    end
   end
 end

@@ -30,6 +30,13 @@ module Fastlane
         if params[:aps_environment]
           self.verify_param(:aps_environment, params[:aps_environment], entitlements['aps-environment'])
         end
+        if params[:other_params]
+          params[:other_params].keys.each do |key|
+            self.verify_param(key, params[:other_params][key], entitlements[key.to_s.tr('_', '-')])
+          end
+        end
+
+        UI.success("Entitlements are verified.")
       end
 
       def self.verify_param(param, expected, actual)
@@ -61,7 +68,12 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :aps_environment,
                                   env_name: 'VERIFY_IPA_APS_ENVIRONMENT',
                                description: 'Key aps-environment in Entitlements',
-                                  optional: true)
+                                  optional: true),
+          FastlaneCore::ConfigItem.new(key: :other_params,
+                                  env_name: 'VERIFY_IPA_OTHER_PARAMS',
+                               description: 'A hash of entitlement key and expected values',
+                                  optional: true,
+                                      type: Hash)
         ]
       end
 
