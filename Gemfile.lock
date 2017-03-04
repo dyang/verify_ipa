@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     fastlane-plugin-verify_ipa (0.1.0)
+      plist
 
 GEM
   remote: https://rubygems.org/
