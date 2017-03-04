@@ -22,8 +22,18 @@ module Fastlane
 
       def self.verify_entitlements(params, entitlements)
         if params[:application_identifier]
-          UI.user_error!("Mismatched application_identifier. Expected: '#{params[:application_identifier]}'; Found: '#{entitlements['application-identifier']}'") unless params[:application_identifier] == entitlements["application-identifier"]
+          self.verify_param(:application_identifier, params[:application_identifier], entitlements['application-identifier'])
         end
+        if params[:team_identifier]
+          self.verify_param(:team_identifier, params[:team_identifier], entitlements['com.apple.developer.team-identifier'])
+        end
+        if params[:aps_environment]
+          self.verify_param(:aps_environment, params[:aps_environment], entitlements['aps-environment'])
+        end
+      end
+
+      def self.verify_param(param, expected, actual)
+        UI.user_error!("Mismatched #{param}. Expected: '#{expected}'; Found: '#{actual}'") unless expected == actual
       end
 
       def self.description
@@ -43,6 +53,14 @@ module Fastlane
           FastlaneCore::ConfigItem.new(key: :application_identifier,
                                   env_name: 'VERIFY_IPA_APPLICATION_IDENTIFIER',
                                description: 'Key application-identifier in Entitlements',
+                                  optional: true),
+          FastlaneCore::ConfigItem.new(key: :team_identifier,
+                                  env_name: 'VERIFY_IPA_TEAM_IDENTIFIER',
+                               description: 'Key com.apple.developer.team-identifier in Entitlements',
+                                  optional: true),
+          FastlaneCore::ConfigItem.new(key: :aps_environment,
+                                  env_name: 'VERIFY_IPA_APS_ENVIRONMENT',
+                               description: 'Key aps-environment in Entitlements',
                                   optional: true)
         ]
       end
