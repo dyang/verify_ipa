@@ -10,15 +10,12 @@ Gem::Specification.new do |spec|
   spec.email         = %q{yanghada@gmail.com}
 
   spec.summary       = %q{verify_ipa}
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-verify_ipa"
+  spec.homepage      = "https://github.com/dyang/verify_ipa"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
-
-  # Don't add a dependency to fastlane or fastlane_re
-  # since this would cause a circular dependency
 
   spec.add_dependency 'plist'
 
