@@ -19,11 +19,15 @@ module Fastlane
       end
 
       def self.verify_files(params, app_path)
-        blacklist = params[:blacklist]
         files_on_blacklist = []
+        files_on_whitelist = []
+
         Dir.chdir(app_path) do
-          blacklist.each { |pattern| files_on_blacklist << Dir.glob(pattern) }
-          UI.user_error!("Found files on the blacklist: #{files_on_blacklist}") unless files_on_blacklist.flatten!.empty?
+          params[:blacklist].each { |pattern| files_on_blacklist << Dir.glob(pattern) }
+          params[:whitelist].each { |pattern| files_on_whitelist << Dir.glob(pattern) } if params[:whitelist]
+
+          invalid_files = files_on_blacklist.flatten - files_on_whitelist.flatten
+          UI.user_error!("Found files on the blacklist: #{invalid_files}") unless invalid_files.empty?
         end
       end
 
@@ -49,6 +53,11 @@ module Fastlane
                                   env_name: 'VERIFY_IPA_BLACKLIST',
                                description: 'A list of glob patterns that define what files should NOT make their way into the ipa',
                                   optional: false,
+                                      type: Array),
+          FastlaneCore::ConfigItem.new(key: :whitelist,
+                                  env_name: 'VERIFY_IPA_WHITELIST',
+                               description: 'A list of glob patterns that are allowed to be included in the ipa',
+                                  optional: true,
                                       type: Array)
         ]
       end

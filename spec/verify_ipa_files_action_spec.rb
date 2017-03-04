@@ -29,5 +29,24 @@ describe Fastlane::Actions::VerifyIpaFilesAction do
         fixture_path
       )
     end
+
+    it 'does not throw user_error for files on the whitelist' do
+      fixture_path = './spec/fixtures/verify_ipa_files'
+      expect(Fastlane::UI).to receive(:user_error!).with("Found files on the blacklist: [\"sensitive.json\", \"top_secret.json\"]")
+
+      Fastlane::Actions::VerifyIpaFilesAction.verify_files(
+        { blacklist: ['*.json'], whitelist: ['offline_data.json'] },
+        fixture_path
+      )
+    end
+
+    it 'does not throw user_error if no files on blacklist are found in ipa' do
+      fixture_path = './spec/fixtures/verify_ipa_files'
+
+      Fastlane::Actions::VerifyIpaFilesAction.verify_files(
+        { blacklist: ['*.rb'] },
+        fixture_path
+      )
+    end
   end
 end
