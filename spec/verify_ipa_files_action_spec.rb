@@ -1,4 +1,13 @@
 describe Fastlane::Actions::VerifyIpaFilesAction do
+  describe '#run' do
+    it 'should find app dir inside of ipa (https://github.com/dyang/verify_ipa/issues/1)' do
+      Fastlane::Actions::VerifyIpaFilesAction.run(
+        { ipa_path: './spec/fixtures/verify_ipa_files/foo.ipa',
+          blacklist: ['*.sh'] }
+      )
+    end
+  end
+
   describe '#verify_files' do
     it 'raises user_error if files in blacklist exists in ipa' do
       fixture_path = './spec/fixtures/verify_ipa_files'

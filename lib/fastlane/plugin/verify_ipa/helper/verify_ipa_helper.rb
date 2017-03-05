@@ -8,7 +8,7 @@ module Fastlane
         ipa_path = File.expand_path(ipa_path)
         `unzip '#{ipa_path}' -d #{dir}`
         UI.user_error!("Unable to unzip ipa '#{ipa_path}'") unless $? == 0
-        File.expand_path("#{dir}/Payload/*.app")
+        Dir["#{dir}/Payload/*.app"].first
       end
     end
   end
