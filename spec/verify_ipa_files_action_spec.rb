@@ -1,9 +1,20 @@
 describe Fastlane::Actions::VerifyIpaFilesAction do
+  before(:each) do
+    Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::IPA_OUTPUT_PATH] = nil
+  end
+
   describe '#run' do
     it 'should find app dir inside of ipa (https://github.com/dyang/verify_ipa/issues/1)' do
       Fastlane::Actions::VerifyIpaFilesAction.run(
         { ipa_path: './spec/fixtures/verify_ipa_files/foo.ipa',
           blacklist: ['*.sh'] }
+      )
+    end
+
+    it 'should find ipa based on lane shared value' do
+      Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::IPA_OUTPUT_PATH] = './spec/fixtures/verify_ipa_files/foo.ipa'
+      Fastlane::Actions::VerifyIpaFilesAction.run(
+        { blacklist: ['*.sh'] }
       )
     end
   end
