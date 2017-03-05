@@ -6,10 +6,10 @@ require 'fastlane/plugin/verify_ipa/version'
 Gem::Specification.new do |spec|
   spec.name          = 'fastlane-plugin-verify_ipa'
   spec.version       = Fastlane::VerifyIpa::VERSION
-  spec.author        = %q{Derek Yang}
-  spec.email         = %q{yanghada@gmail.com}
+  spec.author        = 'Derek Yang'
+  spec.email         = 'yanghada@gmail.com'
 
-  spec.summary       = %q{verify_ipa}
+  spec.summary       = 'Verify various aspects of iOS ipa file'
   spec.homepage      = "https://github.com/dyang/verify_ipa"
   spec.license       = "MIT"
 
