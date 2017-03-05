@@ -1,3 +1,6 @@
-lane :test do
-  verify_ipa
+lane :test_package do
+  verify_ipa_files(
+    ipa_path: '../myapp.ipa',
+    blacklist: ['*.{json,sh}']
+  )
 end
