@@ -5,7 +5,7 @@ module Fastlane
     class VerifyIpaEntitlementsAction < Action
       def self.run(params)
         Dir.mktmpdir do |dir|
-          app_path = Helper::VerifyIpaHelper.app_path(params, dir)
+          app_path = Helper::VerifyIpaHelper.app_path(params[:ipa_path], dir)
           entitlements = self.read_entitlements(params, app_path)
           self.verify_entitlements(params, entitlements)
         end

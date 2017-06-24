@@ -3,7 +3,7 @@ module Fastlane
     class VerifyIpaFilesAction < Action
       def self.run(params)
         Dir.mktmpdir do |dir|
-          app_path = Helper::VerifyIpaHelper.app_path(params, dir)
+          app_path = Helper::VerifyIpaHelper.app_path(params[:ipa_path], dir)
           self.verify_files(params, app_path)
         end
       end
