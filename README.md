@@ -62,9 +62,32 @@ verify_ipa_entitlements(
     team_identifier: 'MZ6ZTY3EA7',
     aps_environment: 'production',
     other_params: {
-            keychain_access_groups: ['MZ6ZTY3EA7.*'],
-            get_task_allow: false
-           }
+        keychain_access_groups: ['MZ6ZTY3EA7.*'],
+        get_task_allow: false,
+        beta_reports_active: true
+        }
+)
+```
+
+To test application extensions, use the `:extensions` parameter, e.g:
+
+```bash
+verify_ipa_entitlements(
+    application_identifier: 'MZ6ZTY3EA7.com.apple.myapp',
+    team_identifier: 'MZ6ZTY3EA7',
+    aps_environment: 'production',
+    application_groups: [
+        'group.com.apple.mygroup'
+    ]
+    extensions: {
+        'My Great Extension': {
+            application_identifier: 'MZ6ZTY3EA7.com.apple.myapp.ext',
+            team_identifier: 'MZ6ZTY3EA7',
+            application_groups: [
+                'group.com.apple.mygroup'
+            ]
+        }
+    }
 )
 ```
 
