@@ -30,6 +30,9 @@ module Fastlane
         if params[:aps_environment]
           self.verify_param(:aps_environment, params[:aps_environment], entitlements['aps-environment'])
         end
+        if params[:application_groups]
+          self.verify_param(:application_groups, params[:application_groups], entitlements['com.apple.security.application-groups'])
+        end
         if params[:other_params]
           params[:other_params].keys.each do |key|
             self.verify_param(key, params[:other_params][key], entitlements[key.to_s.tr('_', '-')])
@@ -69,6 +72,11 @@ module Fastlane
                                   env_name: 'VERIFY_IPA_APS_ENVIRONMENT',
                                description: 'Key aps-environment in Entitlements',
                                   optional: true),
+          FastlaneCore::ConfigItem.new(key: :application_groups,
+                                  env_name: 'VERIFY_IPA_APPLICATION_GROUPS',
+                               description: 'Key com.apple.security.application-groups in Entitlements',
+                                  optional: true,
+                                      type: Array),
           FastlaneCore::ConfigItem.new(key: :other_params,
                                   env_name: 'VERIFY_IPA_OTHER_PARAMS',
                                description: 'A hash of entitlement key and expected values',

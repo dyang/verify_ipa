@@ -3,7 +3,7 @@ describe Fastlane::Actions::VerifyIpaEntitlementsAction do
     entitlements = Plist.parse_xml"<dict>
                 <key>keychain-access-groups</key>
                 <array>
-                        <string>MZ6ZTY3EA6.*</string>
+                  <string>MZ6ZTY3EA6.*</string>
                 </array>
                 <key>get-task-allow</key>
                 <false/>
@@ -11,6 +11,10 @@ describe Fastlane::Actions::VerifyIpaEntitlementsAction do
                 <string>MZ6ZTY3EA6.com.apple.*</string>
                 <key>com.apple.developer.team-identifier</key>
                 <string>MZ6ZTY3EA6</string>
+                <key>com.apple.security.application-groups</key>
+                <array>
+                  <string>group.com.apple.app1</string>
+                </array>
         </dict>"
 
     it 'raises user_error if application identifier does not match' do
@@ -58,12 +62,22 @@ describe Fastlane::Actions::VerifyIpaEntitlementsAction do
       )
     end
 
+    it 'raises user_error if application groups does not match' do
+      expect(Fastlane::UI).to receive(:user_error!).with("Mismatched application_groups. Expected: '[\"group.com.apple.app2\"]'; Found: '[\"group.com.apple.app1\"]'")
+
+      Fastlane::Actions::VerifyIpaEntitlementsAction.verify_entitlements(
+        { application_groups: ['group.com.apple.app2'] },
+        entitlements
+      )
+    end
+
     it 'shows success if all params match' do
       expect(Fastlane::UI).to receive(:success).with("Entitlements are verified.")
 
       Fastlane::Actions::VerifyIpaEntitlementsAction.verify_entitlements(
         { application_identifier: 'MZ6ZTY3EA6.com.apple.*',
           team_identifier: 'MZ6ZTY3EA6',
+          application_groups: ['group.com.apple.app1'],
           other_params: {
             keychain_access_groups: ['MZ6ZTY3EA6.*'],
             get_task_allow: false
