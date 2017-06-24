@@ -184,6 +184,19 @@ AllCops:
     - '**/lib/assets/custom_action_template.rb'
     - './vendor/**/*'
 
+# They don't have to be snake_case
+Style/FileName:
+  Exclude:
+    - '**/Dangerfile'
+    - '**/Brewfile'
+    - '**/Gemfile'
+    - '**/Podfile'
+    - '**/Rakefile'
+    - '**/Fastfile'
+    - '**/Deliverfile'
+    - '**/Snapfile'
+    - '**/*.gemspec'
+
 # We're not there yet
 Style/Documentation:
   Enabled: false
