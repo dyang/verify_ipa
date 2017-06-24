@@ -22,7 +22,7 @@ describe Fastlane::Actions::VerifyIpaFilesAction do
   describe '#verify_files' do
     fixture_path = './spec/fixtures/verify_ipa_files'
 
-    it 'raises user_error if files in blacklist exists in ipa' do
+    it 'raises user_error if files in blacklist exist in ipa' do
       expect(Fastlane::UI).to receive(:user_error!).with("Found files on the blacklist: [\"offline_data.json\", \"sensitive.json\", \"top_secret.json\"]")
 
       Fastlane::Actions::VerifyIpaFilesAction.verify_files(
