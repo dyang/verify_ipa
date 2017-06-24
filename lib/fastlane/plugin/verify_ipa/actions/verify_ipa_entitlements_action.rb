@@ -14,7 +14,7 @@ module Fastlane
 
       def self.read_entitlements(params, path)
         profile_path = "#{path}/embedded.mobileprovision"
-        profile_plist = sh("security cms -D -i #{profile_path}")
+        profile_plist = sh("security cms -D -i '#{profile_path}'")
         UI.user_error!("Unable to extract profile") unless $? == 0
 
         profile = Plist.parse_xml(profile_plist)
